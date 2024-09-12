@@ -1,31 +1,67 @@
-const prompt = require("prompt-sync")();
-let num1=parseInt((prompt("Ingrese el primer numero: ")));
-let num2=parseInt((prompt("Ingrese el segundo numero: ")));
-let resultado=0;
+import promptSync from 'prompt-sync';
+import { suma, resta, multiplicacion,division } from './operaciones.js';
+const prompt = promptSync();
+let i;
 
-const opcion=prompt("Ingrese el signo de la operacion que desea realizar (+,-,/,*): ");
+function numeros() {
+    let arrayNums = [], operando = 0, op = 1;
 
-switch (opcion){
-    case '+':
-        resultado=num1+num2;
-        console.log(resultado);
-        break;
-    case '-':
-        resultado=num1-num2;
-        break;
-    case '/':
-        if(num2==0)
-        {
-            console.log("La division por 0 no esta permitida");
+    do {
+        console.log(`Ingrese el operando número ${operando + 1}`);
+        let num = parseFloat(prompt("Numero: "));
+        while (isNaN(num)) {
+            console.log("Ingreso un numero incorrecto, vuelva a ingresarlo.");
+            num = parseFloat(prompt("Numero: "));
         }
-        resultado=num1/num2;
-        console.log(resultado);
-        break;
-    case '*':
-        resultado=num1*num2;
-        console.log(resultado);
-        break;
-    default:
-        console.log("Opcion no valida....");
-        break;
+        arrayNums.push(num);
+        operando++;
+        if (operando > 1) {
+            console.log("Desea seguir ingresando operandos? 1.(SI) o 2.(NO)");
+            op = parseInt(prompt("Ingrese la opcion que desee: "));
+            while (op !== 1 && op !== 2) {
+                console.log("Ingreso una opcion incorrecta, vuelva a ingresar.");
+                op = parseInt(prompt("Ingrese la opcion correcta: "));
+            }
+        }
+    } while (op !== 2);
+
+    return arrayNums;
 }
+
+let array = numeros();
+
+function menu() {
+    let opcion;
+    do {
+        console.log("1.Sumar ");
+        console.log("2.Restar ");
+        console.log("3.Multiplicar ");
+        console.log("4.Dividir ");
+        console.log("5.Salir ");
+        opcion = parseInt(prompt("Ingrese el operador que desee: "));
+
+        switch (opcion) {
+            case 1:
+                console.log("El resultado es: ", suma(array));
+                break;
+            case 2:
+                console.log("El resultado es: ", resta(array));
+                break;
+            case 3:
+                console.log("El resultado es: ", multiplicacion(array));
+                break;
+            case 4:
+                console.log("El resultado es: ", division(array));
+                break;
+            case 5:
+                console.log("Gracias por utilizar el programa ");
+                break;
+            default:
+                console.log("ERROR, opcion incorrecta ");
+                break;
+        }
+    } while (opcion !== 5);
+}
+
+//MAIN
+menu();

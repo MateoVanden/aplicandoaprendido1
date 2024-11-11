@@ -52,9 +52,12 @@ export function editarTarea() {
                         dificultad = agregarDificultad();
                         arrayTarea[i - 1].dificultad = dificultad;
                         break;
+                    default:
+                        console.log("ERROR, opcion incorrecta... ");
+                        break;
                 }
             }
-            else{
+            else {
                 console.log("Saliendo del menu... ");
             }
         }
